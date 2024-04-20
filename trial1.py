@@ -50,7 +50,8 @@ def detect_objects(img):
     return indexes, boxes, class_ids, confidences
 
 # Sound mapping
-def sound_mapping(indexes, boxes, class_ids, width):
+def sound_mapping(indexes, boxes, class_ids, width, classes):
+    threads = []
     for i in range(len(boxes)):
         if i in indexes:
             x, y, w, h = boxes[i]
@@ -64,10 +65,13 @@ def sound_mapping(indexes, boxes, class_ids, width):
             volume = min(1, 2 / (distance if distance > 0 else 1))
 
             # Play sound with directional audio
-            threading.Thread(target=play_directional_sound, args=(440, 1, volume, pan)).start()
+            thread = threading.Thread(target=play_directional_sound, args=(440, 1, volume, pan))
+            threads.append(thread)
+            thread.start()
+    return threads
 
 # Main loop
-while True:
+'''while True:
     ret, frame = cap.read()
     if ret:
         indexes, boxes, class_ids, confidences = detect_objects(frame)
@@ -75,7 +79,7 @@ while True:
 
     key = cv2.waitKey(1)
     if key == 27:
-        break
+        break'''
 
 cap.release()
 cv2.destroyAllWindows()
