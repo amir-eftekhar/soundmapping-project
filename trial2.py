@@ -98,7 +98,7 @@ def display_frame(frame, indexes, boxes, class_ids, confidences):
 
 threads = []
 # Main loop
-# Main loop
+
 while True:
     ret, frame = cap.read()
     if not ret:
