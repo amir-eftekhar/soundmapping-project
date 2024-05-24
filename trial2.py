@@ -33,7 +33,7 @@ def sound_mapping(indexes, boxes, class_ids, width, classes):
             label = str(classes[class_ids[i]])
 
             # Calculate pan based on object position
-            pan = (x + w / 2 - width / 2) / (width / 2)  # Pan range -1 to 1
+            pan = (x + w / 2 - width / 2) / (width / 2)  
 
             # Calculate volume based on distance, smaller width of the box means farther away
             volume = min(1, 2 / (distance if distance > 0 else 1))
@@ -77,7 +77,7 @@ def detect_objects(img):
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
         indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
-        q.put((indexes, boxes, class_ids, confidences))  # Put the result into the queue
+        q.put((indexes, boxes, class_ids, confidences))  # Put the result into the queue 
     except Exception as e:
         print(f"Error in play_directional_sound: {e}")
     finally:
@@ -115,11 +115,11 @@ while True:
     
 
     # Start a new thread for sound mapping
-    sound_thread = threading.Thread(target=sound_mapping, args=(indexes, boxes, class_ids, frame.shape[1], classes))
-    sound_thread.start()
+    #sound_thread = threading.Thread(target=sound_mapping, args=(indexes, boxes, class_ids, frame.shape[1], classes))
+    #sound_thread.start()
 
     # Wait for the sound mapping thread to finish
-    sound_thread.join()
+    #sound_thread.join()
 
     try:
         display_frame(frame, indexes, boxes, class_ids, confidences)

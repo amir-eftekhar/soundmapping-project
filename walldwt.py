@@ -40,6 +40,7 @@ def segment_and_display(frame):
     (128, 0, 0), (0, 128, 0), (0, 0, 128), (128, 128, 0), (0, 128, 128), (128, 0, 128),
     (64, 0, 0), (0, 64, 0), (0, 0, 64), (64, 64, 0), (0, 64, 64), (64, 0, 64), (192, 192, 192)
 ]) 
+    output_predictions = output_predictions.clamp(max=colors.shape[0]-1)
     color_mask = colors[output_predictions.cpu().numpy()]  # Apply colors to the predictions
 
     # Resize color_mask to match frame dimensions
